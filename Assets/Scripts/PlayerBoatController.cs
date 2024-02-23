@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class PlayerBoatController : MonoBehaviour
@@ -7,6 +8,9 @@ public class PlayerBoatController : MonoBehaviour
     public Rigidbody2D rb;
     public float BoatSpeed = 5f;
     public float TurnSpeed = 2f;
+    private float velocityMagnitude;
+    public float h;
+    public float v;
 
 
     void Awake()
@@ -41,14 +45,16 @@ public class PlayerBoatController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow))
         {
 
-            transform.Rotate(Vector3.forward * TurnSpeed);
-            rb.velocity = RotateVector2(rb.velocity, TurnSpeed/2f);
+            //transform.Rotate(Vector3.forward * TurnSpeed);
+            rb.AddTorque(TurnSpeed);
+            rb.velocity = RotateVector2(rb.velocity, TurnSpeed);
 
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.Rotate(Vector3.back * TurnSpeed);
-            rb.velocity = RotateVector2(rb.velocity, -TurnSpeed/2f);
+            //transform.Rotate(Vector3.back * TurnSpeed);
+            rb.AddTorque(-TurnSpeed);
+            rb.velocity = RotateVector2(rb.velocity, -TurnSpeed);
         }
     }
 

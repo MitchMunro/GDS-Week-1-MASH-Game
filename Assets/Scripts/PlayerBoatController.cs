@@ -12,15 +12,27 @@ public class PlayerBoatController : MonoBehaviour
     public float h;
     public float v;
 
+    private GameManager GM;
 
     void Awake()
     {
        
     }
 
+    private void Start()
+    {
+        GM = GameManager.Inst;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
+        BoatSteering();
+    }
+
+    void BoatSteering()
+    {
+        if (GM.IsGameOver) return;
         HandleAcceleration();
         HandleRotation();
     }

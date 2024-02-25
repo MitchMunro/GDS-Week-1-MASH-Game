@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PersonLogic : MonoBehaviour
+public class IslandLogic : MonoBehaviour
 {
     private GameManager GM;
 
@@ -21,14 +21,7 @@ public class PersonLogic : MonoBehaviour
     {
         if (collision.transform.tag == "PlayerBoat")
         {
-            if (GM.PickUpPerson())
-            {
-                Destroy(this.gameObject);
-            }
-            else
-            {
-                Debug.Log("Maximum passengers reached.");
-            }
+            GM.DeliverPeople();
         }
     }
 }

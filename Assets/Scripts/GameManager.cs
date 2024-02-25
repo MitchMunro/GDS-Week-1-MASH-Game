@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     public AudioSource SFX_ShipBell;
     public AudioSource SFX_Crash;
 
+    public GameObject GO_Person;
+    public GameObject GO_Rock;
+
     private void Awake()
     {
         //Set up GameController as a Singleton
@@ -42,6 +45,8 @@ public class GameManager : MonoBehaviour
         PeopleOnBoat = 0;
         PeopleRescued = 0;
         UpdateUI();
+
+        RandomisePersonRockPlacement();
     }
 
     // Update is called once per frame
@@ -117,12 +122,92 @@ public class GameManager : MonoBehaviour
         
     }
 
+    void RandomisePersonRockPlacement()
+    {
+        RandomPersonPlacement(GO_Person);
+        RandomPersonPlacement(GO_Person);
+        RandomPersonPlacement(GO_Person);
+        RandomPersonPlacement(GO_Person);
+        RandomPersonPlacement(GO_Person);
+
+        RandomRockPlacement(GO_Rock);
+        RandomRockPlacement(GO_Rock);
+        RandomRockPlacement(GO_Rock);
+        RandomRockPlacement(GO_Rock);
+        RandomRockPlacement(GO_Rock);
+
+        RandomRockPlacement(GO_Rock);
+        RandomRockPlacement(GO_Rock);
+        RandomRockPlacement(GO_Rock);
+        RandomRockPlacement(GO_Rock);
+        RandomRockPlacement(GO_Rock);
+
+
+    }
+
+    void RandomPersonPlacement(GameObject obj)
+    {
+        float x = 0;
+        float y = 0;
+
+        bool workDone = false;
+
+        while (!workDone)
+        {
+            x = Random.Range(-0.5f, 14);
+            y = Random.Range(-10, 10);
+            Vector2 point = new Vector2(x, y);
+
+            //This check doesn't work.
+            Collider2D collider = Physics2D.OverlapCircle(point, 3f, 0);
+
+            if (collider != null)
+            {
+                Debug.Log("Collider found, retrying.");
+            }
+            else
+            {
+                Instantiate(obj, new Vector3(x, y, 0), obj.transform.rotation);
+                workDone = true;
+            }
+        }
+    }
+
+    void RandomRockPlacement(GameObject obj)
+    {
+        float x = 0;
+        float y = 0;
+
+        bool workDone = false;
+
+        while (!workDone)
+        {
+            x = Random.Range(-4.3f, 10);
+            y = Random.Range(-10, 10);
+            Vector2 point = new Vector2(x, y);
+
+            //This check doesn't work.
+            Collider2D collider = Physics2D.OverlapCircle(point, 3f, 0);
+
+            if (collider != null)
+            {
+                Debug.Log("Collider found, retrying.");
+            }
+            else
+            {
+                Instantiate(obj, new Vector3(x, y, 0), obj.transform.rotation);
+                workDone = true;
+            }
+        }
+    }
+
     public void GameOver()
     {
         IsGameOver = true;
 
         SFX_Crash.Play();
 
+        VictoryPopUp.SetActive(false);
         GameOverPopUp.SetActive(true);
     }
 

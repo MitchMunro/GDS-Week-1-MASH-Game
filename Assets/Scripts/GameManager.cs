@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
 
     public bool IsGameOver { get; private set; } = false;
 
+    public AudioSource SFX_Correct;
+    public AudioSource SFX_ShipBell;
+    public AudioSource SFX_Crash;
+
     private void Awake()
     {
         //Set up GameController as a Singleton
@@ -60,6 +64,8 @@ public class GameManager : MonoBehaviour
             PeopleRescued += PeopleOnBoat;
             PeopleOnBoat = 0;
 
+            SFX_Correct.Play();
+
             UpdateUI();
             CheckForVictory();
 
@@ -100,6 +106,8 @@ public class GameManager : MonoBehaviour
         {
             PeopleOnBoat++;
             UpdateUI();
+
+            SFX_ShipBell.Play();
             return true;
         }
         else
@@ -112,6 +120,8 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         IsGameOver = true;
+
+        SFX_Crash.Play();
 
         GameOverPopUp.SetActive(true);
     }
